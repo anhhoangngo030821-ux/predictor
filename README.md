@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FutureYou - Ứng Dụng Dự Đoán Bản Thể Tương Lai & Bản Đồ Kiến Tạo Cuộc Đời
 
 Ứng dụng web tương tác giúp người dùng giải mã và dự đoán hình mẫu con người của mình trong tương lai (5 - 10 năm tới) dựa trên phân tích sâu về **Danh tính (Identity)**, **Tính cách tư duy (Cognitive Personality)**, **Thân phận & Vai trò xã hội (Status & Roles)** cùng **Hệ giá trị cốt lõi (Core Values)**.
@@ -68,3 +69,7 @@ Start-Process "C:\Users\THUY\.gemini\antigravity\scratch\future-self-predictor\i
 ## 📂 Khuyến Nghị Thiết Lập Workspace
 Để quản lý và phát triển tiếp dự án thuận tiện, bạn nên mở thư mục này thành Workspace làm việc chính trong Antigravity:
 - Đường dẫn: `C:\Users\THUY\.gemini\antigravity\scratch\future-self-predictor`
+=======
+# predictor
+dự đoán
+>>>>>>> 3d3ce1572779613ffd5c0259346b946587f208dd
