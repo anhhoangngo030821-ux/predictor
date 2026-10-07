@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutureYou - Dự Đoán Bản Thể Tương Lai & Bản Đồ Kiến Tạo Cuộc Đời</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#8b5cf6',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              pink: '#ec4899',
+              amber: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="bg-cyber-universe text-slate-100 flex flex-col min-h-screen">
+
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80 no-print">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" id="nav-brand">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/20">
+          <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-300 bg-clip-text text-transparent font-heading tracking-wide">FutureYou</span>
+          <span class="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-purple-900/40 text-purple-300 border border-purple-700/50">Life Matrix 2026</span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button id="btn-load-saved" class="hidden text-xs font-semibold px-3 py-1.5 rounded-lg border border-purple-500/40 text-purple-300 hover:bg-purple-950/50 transition flex items-center gap-1.5">
+          <i data-lucide="history" class="w-3.5 h-3.5"></i>
+          <span>Kết quả đã lưu</span>
+        </button>
+        <span class="text-xs text-slate-400 hidden md:block">Mô Phỏng Bản Thể & Lộ Trình 10 Năm</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 py-8 w-full">
+
+    <!-- 1. VIEW: HERO / LANDING -->
+    <section id="app-hero" class="text-center py-10 md:py-16 space-y-8 animate-fadeIn">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-950/30 text-purple-300 text-xs font-semibold uppercase tracking-wider glow-purple">
+        <i data-lucide="compass" class="w-4 h-4 text-cyan-400"></i>
+        Định Vị Tương Lai Dựa Trên Tâm Lý Học & Khoa Học Hành Động
+      </div>
+
+      <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight max-w-4xl mx-auto">
+        Bạn Sẽ Là Ai Trong <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-300 bg-clip-text text-transparent">10 Năm Tới?</span>
+      </h1>
+
+      <p class="text-base md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
+        Tương lai không phải một định mệnh ngẫu nhiên, mà là kết quả của danh tính, tính cách và những quyết định bạn lặp lại mỗi ngày. Khám phá bản thể tương lai và nhận ngay <strong class="text-white font-medium">Bản đồ lộ trình 3 giai đoạn</strong> cùng <strong class="text-white font-medium">Bộ công cụ hành động thực chiến</strong>.
+      </p>
+
+      <!-- 3 Feature Badges -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto pt-4 text-left">
+        <div class="glass-panel p-5 rounded-2xl border border-white/5 space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center">
+            <i data-lucide="dna" class="w-4 h-4"></i>
+          </div>
+          <h4 class="font-bold text-white text-sm">8 Nhóm Bản Thể Tương Lai</h4>
+          <p class="text-xs text-slate-400 leading-normal">Giải mã bạn thuộc hình mẫu Lãnh Đạo, Bậc Thầy Sáng Tạo, Chiến Lược Gia hay Du Mục Tự Do...</p>
+        </div>
+
+        <div class="glass-panel p-5 rounded-2xl border border-white/5 space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+            <i data-lucide="pie-chart" class="w-4 h-4"></i>
+          </div>
+          <h4 class="font-bold text-white text-sm">Biểu Đồ Radar 6 Trục</h4>
+          <p class="text-xs text-slate-400 leading-normal">Đo lường trực quan: Tầm nhìn, Năng lực thực thi, Sáng tạo, Thấu cảm, Tài chính và An lạc.</p>
+        </div>
+
+        <div class="glass-panel p-5 rounded-2xl border border-white/5 space-y-2">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <i data-lucide="map" class="w-4 h-4"></i>
+          </div>
+          <h4 class="font-bold text-white text-sm">Lộ Trình & Thói Quen</h4>
+          <p class="text-xs text-slate-400 leading-normal">3 giai đoạn (0-1y, 1-3y, 3-5y) với 5 thói quen vi mô hàng ngày và danh sách kỹ năng vàng.</p>
+        </div>
+      </div>
+
+      <div class="pt-6">
+        <button id="btn-start-journey" class="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-lg shadow-xl shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105 transition-all duration-200 inline-flex items-center gap-3">
+          <span>Bắt Đầu Giải Mã Tương Lai</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+        <p class="text-xs text-slate-500 mt-3">Thời gian hoàn thành: ~ 3-5 phút • Hoàn toàn bảo mật</p>
+      </div>
+    </section>
+
+    <!-- 2. VIEW: IDENTITY INPUT -->
+    <section id="app-identity" class="hidden max-w-xl mx-auto py-8">
+      <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-6">
+        <div class="space-y-2 text-center">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center mx-auto mb-2">
+            <i data-lucide="user" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-white font-heading">Khai Báo Điểm Xuất Phát</h2>
+          <p class="text-sm text-slate-400">Giúp hệ thống cá nhân hóa thẻ danh tính và khung lộ trình của riêng bạn.</p>
+        </div>
+
+        <form id="form-identity" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Họ tên hoặc Biệt danh của bạn *</label>
+            <input type="text" id="input-name" required placeholder="Ví dụ: Alex Minh, Hà My..." class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none text-white transition text-sm">
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Nhóm độ tuổi</label>
+              <select id="select-age" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-purple-500 outline-none text-white text-sm">
+                <option value="Dưới 20 tuổi (Gen Z trẻ)">Dưới 20 tuổi (Gen Z trẻ)</option>
+                <option value="20 - 25 tuổi (Giai đoạn khởi nghiệp bản thân)" selected>20 - 25 tuổi (Khởi nghiệp bản thân)</option>
+                <option value="26 - 32 tuổi (Giai đoạn bứt phá sự nghiệp)">26 - 32 tuổi (Bứt phá sự nghiệp)</option>
+                <option value="33 - 45 tuổi (Giai đoạn làm chủ & đòn bẩy)">33 - 45 tuổi (Làm chủ & đòn bẩy)</option>
+                <option value="Trên 45 tuổi (Giai đoạn chuyển giao di sản)">Trên 45 tuổi (Chuyển giao di sản)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Vị thế / Vai trò hiện tại</label>
+              <select id="select-role" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-purple-500 outline-none text-white text-sm">
+                <option value="Sinh viên / Người mới ra trường" selected>Sinh viên / Mới ra trường</option>
+                <option value="Chuyên viên / Nhân sự chuyên môn">Chuyên viên / Kỹ sư / Designer</option>
+                <option value="Freelancer / Người làm tự do">Freelancer / Creator độc lập</option>
+                <option value="Nhà khởi nghiệp / Chủ kinh doanh">Nhà khởi nghiệp / Chủ dự án</option>
+                <option value="Quản lý / Trưởng nhóm">Quản lý / Team Leader</option>
+                <option value="Đang trong giai đoạn chuyển hướng sự nghiệp">Đang chuyển giao sự nghiệp</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Tầm nhìn bạn muốn hệ thống phóng chiếu</label>
+            <div class="grid grid-cols-3 gap-3">
+              <label class="cursor-pointer border border-slate-700 bg-slate-900/60 rounded-xl p-3 text-center text-xs has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40 transition">
+                <input type="radio" name="horizon" value="3 năm tới" class="hidden">
+                <span class="font-bold block text-white">3 Năm</span>
+                <span class="text-slate-400 text-[10px]">Tầm nhìn ngắn</span>
+              </label>
+              <label class="cursor-pointer border border-purple-500 bg-purple-950/40 rounded-xl p-3 text-center text-xs has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40 transition">
+                <input type="radio" name="horizon" value="5 - 7 năm tới" checked class="hidden">
+                <span class="font-bold block text-white">5 - 7 Năm</span>
+                <span class="text-slate-400 text-[10px]">Lý tưởng nhất</span>
+              </label>
+              <label class="cursor-pointer border border-slate-700 bg-slate-900/60 rounded-xl p-3 text-center text-xs has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/40 transition">
+                <input type="radio" name="horizon" value="10 năm tới" class="hidden">
+                <span class="font-bold block text-white">10 Năm</span>
+                <span class="text-slate-400 text-[10px]">Tầm nhìn dài</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="pt-4 flex items-center justify-between">
+            <button type="button" id="btn-back-hero" class="text-xs text-slate-400 hover:text-white transition flex items-center gap-1">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              Quay lại
+            </button>
+            <button type="submit" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-500/20 transition flex items-center gap-2">
+              <span>Bắt Đầu Khảo Sát</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 3. VIEW: QUIZ ENGINE -->
+    <section id="app-quiz" class="hidden max-w-2xl mx-auto py-6 space-y-6">
+      <!-- Progress Bar & Stage Indicator -->
+      <div class="glass-panel p-4 rounded-2xl space-y-2 border border-white/5">
+        <div class="flex items-center justify-between text-xs">
+          <div class="flex items-center gap-2">
+            <span id="quiz-stage-badge" class="px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 font-semibold border border-purple-500/30">
+              Chặng 1: Danh tính
+            </span>
+          </div>
+          <span id="quiz-counter" class="font-mono text-slate-400 font-medium">Câu 1 / 16</span>
+        </div>
+        
+        <!-- Progress Bar Line -->
+        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+          <div id="quiz-progress-bar" class="bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 h-2 rounded-full transition-all duration-300 ease-out" style="width: 6.25%"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-6 border border-white/10 relative">
+        <div class="space-y-2">
+          <p id="quiz-stage-desc" class="text-xs text-purple-400 font-medium tracking-wide uppercase">Gốc rễ danh tính & xuất phát điểm</p>
+          <h3 id="quiz-question-title" class="text-xl md:text-2xl font-bold text-white leading-snug">
+            Khi được hỏi 'Bạn là ai?', điều đầu tiên định hình danh tính của bạn trong suy nghĩ là gì?
+          </h3>
+          <p id="quiz-question-sub" class="text-xs md:text-sm text-slate-400">Hãy chọn câu trả lời mô tả chân thực nhất cảm xúc tự thân của bạn hiện nay.</p>
+        </div>
+
+        <!-- Options Container -->
+        <div id="quiz-options-container" class="space-y-3">
+          <!-- Dynamically populated options -->
+        </div>
+
+        <!-- Quiz Navigation Controls -->
+        <div class="pt-4 flex items-center justify-between border-t border-slate-800/80">
+          <button id="btn-quiz-prev" class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white border border-slate-700/60 hover:border-slate-500 transition flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+            <span>Câu trước</span>
+          </button>
+          
+          <button id="btn-quiz-next" disabled class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:hover:bg-purple-600 disabled:cursor-not-allowed text-white font-semibold text-xs transition flex items-center gap-1.5 shadow-md shadow-purple-600/20">
+            <span>Tiếp theo</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. VIEW: AI SIMULATION LOADING -->
+    <section id="app-simulation" class="hidden max-w-lg mx-auto py-16 text-center space-y-8">
+      <div class="relative w-44 h-44 mx-auto flex items-center justify-center">
+        <!-- Scan ring -->
+        <div class="absolute inset-0 rounded-full border-2 border-purple-500/20 animate-ping"></div>
+        <div class="absolute inset-2 rounded-full border-2 border-dashed border-cyan-400/40 animate-spin" style="animation-duration: 10s;"></div>
+        <div class="w-32 h-32 rounded-full bg-slate-900 border border-purple-500/40 flex flex-col items-center justify-center glow-purple relative overflow-hidden">
+          <div class="scan-line"></div>
+          <span id="simulation-percentage" class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-300 font-mono">0%</span>
+          <span class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">SIMULATING</span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-xl font-bold text-white font-heading">Đang Mô Phỏng Bản Thể Tương Lai...</h3>
+        <p id="simulation-status-text" class="text-sm text-cyan-300 font-mono h-6 transition-all duration-300">
+          Giải mã vector tính cách & phản ứng áp lực...
+        </p>
+      </div>
+
+      <div class="max-w-xs mx-auto text-xs text-slate-500 space-y-1">
+        <p>• Phân tích 6 trục năng lực cốt lõi</p>
+        <p>• Khớp nối dữ liệu 8 mô hình Archetype</p>
+        <p>• Thiết lập lộ trình 3 giai đoạn độc quyền</p>
+      </div>
+    </section>
+
+    <!-- 5. VIEW: RESULTS DASHBOARD -->
+    <section id="app-results" class="hidden space-y-8 py-4 animate-fadeIn">
+      
+      <!-- Top Action Bar (Buttons) -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-800 no-print">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-xs text-slate-300 font-medium">Bản đồ kiến tạo tương lai đã được kích hoạt</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btn-download-card" class="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-md shadow-purple-600/30">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Tải Thẻ ID Tương Lai (.PNG)</span>
+          </button>
+          <button id="btn-print-roadmap" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition flex items-center gap-1.5 border border-slate-700">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>In / Lưu PDF Lộ Trình</span>
+          </button>
+          <button id="btn-retake" class="px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white text-xs transition flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>Làm Lại</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN IDENTITY CARD (Future Self Card) -->
+      <div id="identity-card-display" class="glass-panel p-6 md:p-8 rounded-3xl relative overflow-hidden border border-purple-500/30 glow-purple">
+        <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-purple-600/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-64 h-64 rounded-full bg-cyan-600/10 blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          
+          <!-- Left: Identity & Archetype -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span id="res-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-purple-900/50 text-purple-300 border border-purple-500/40">
+                Thống Lĩnh & Định Hình Xu Thế
+              </span>
+              <span class="text-xs text-slate-400">Độ tương thích: <strong id="res-match-pct" class="text-cyan-400 font-mono">96%</strong></span>
+            </div>
+
+            <div>
+              <p class="text-xs text-slate-400 uppercase tracking-widest">BẢN THỂ TƯƠNG LAI CỦA <span id="res-user-name" class="text-white font-bold">ALEX</span> (5 - 10 NĂM TỚI)</p>
+              <h2 id="res-arch-name" class="text-3xl md:text-5xl font-black text-white font-heading mt-1">
+                Nhà Lãnh Đạo Tiên Phong
+              </h2>
+              <p id="res-arch-subtitle" class="text-sm md:text-base text-cyan-300 font-medium">The Visionary Leader & Empire Builder</p>
+            </div>
+
+            <!-- Life Motto Block -->
+            <div class="p-4 rounded-2xl bg-white/5 border-l-4 border-purple-500 italic text-slate-200 text-sm md:text-base leading-relaxed">
+              <span id="res-slogan">"Không chờ đợi tương lai đến, tôi xây dựng nó bằng niềm tin và đội ngũ của mình."</span>
+            </div>
+
+            <p id="res-summary" class="text-sm text-slate-300 leading-relaxed font-light">
+              Trong 5 - 10 năm tới, bạn sẽ đứng ở vị trí đầu tàu dẫn dắt một doanh nghiệp hoặc tổ chức quy mô lớn. Bạn sở hữu trực giác chiến lược nhạy bén và khả năng thu phục hiền tài.
+            </p>
+
+            <!-- Secondary Archetype Tag -->
+            <div class="pt-2 flex items-center gap-2 text-xs text-slate-400">
+              <i data-lucide="layers" class="w-4 h-4 text-purple-400"></i>
+              <span>Bản thể phụ trợ (Secondary Tone): <strong id="res-secondary-name" class="text-slate-200">Chiến Lược Gia</strong> (<span id="res-secondary-pct">88%</span>)</span>
+            </div>
+          </div>
+
+          <!-- Right: 4 Fast Metric Pills -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="glass-panel p-4 rounded-2xl border border-white/5 text-center">
+              <span class="text-xl">💎</span>
+              <p class="text-[11px] text-slate-400 font-semibold uppercase mt-1">Tự Do Tài Chính</p>
+              <p id="metric-wealth" class="text-2xl font-black text-emerald-400 font-mono">92%</p>
+            </div>
+            <div class="glass-panel p-4 rounded-2xl border border-white/5 text-center">
+              <span class="text-xl">🌟</span>
+              <p class="text-[11px] text-slate-400 font-semibold uppercase mt-1">Ảnh Hưởng Xã Hội</p>
+              <p id="metric-influence" class="text-2xl font-black text-purple-400 font-mono">88%</p>
+            </div>
+            <div class="glass-panel p-4 rounded-2xl border border-white/5 text-center">
+              <span class="text-xl">🌿</span>
+              <p class="text-[11px] text-slate-400 font-semibold uppercase mt-1">Viên Mãn & An Lạc</p>
+              <p id="metric-fulfillment" class="text-2xl font-black text-cyan-400 font-mono">85%</p>
+            </div>
+            <div class="glass-panel p-4 rounded-2xl border border-white/5 text-center">
+              <span class="text-xl">⚡</span>
+              <p class="text-[11px] text-slate-400 font-semibold uppercase mt-1">Làm Chủ Thực Thi</p>
+              <p id="metric-mastery" class="text-2xl font-black text-amber-400 font-mono">90%</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RADAR CHART & 3 FUTURE SCENARIOS -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Radar Chart (5 Cols) -->
+        <div class="lg:col-span-5 glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-base flex items-center gap-2">
+              <i data-lucide="radar" class="w-5 h-5 text-purple-400"></i>
+              <span>Biểu Đồ Năng Lực 6 Chiều</span>
+            </h3>
+            <span class="text-xs text-slate-400">Radar Analysis</span>
+          </div>
+
+          <div class="relative w-full aspect-square max-w-[380px] mx-auto flex items-center justify-center">
+            <canvas id="radarChartCanvas" class="w-full h-full"></canvas>
+          </div>
+
+          <p class="text-xs text-slate-400 text-center leading-normal">
+            Biểu đồ phản ánh sự cân bằng giữa Tầm nhìn, Khả năng thực thi, Sáng tạo đột phá, Sức hút lãnh đạo, Tư duy tài chính và Sự an lạc.
+          </p>
+        </div>
+
+        <!-- 3 Scenarios (7 Cols) -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-base flex items-center gap-2">
+              <i data-lucide="git-branch" class="w-5 h-5 text-cyan-400"></i>
+              <span>3 Kịch Bản Tương Lai Dự Báo</span>
+            </h3>
+            <span class="text-xs text-slate-400">Trajectory Forecast</span>
+          </div>
+
+          <!-- Scenario 1: Optimal -->
+          <div class="glass-panel p-5 rounded-2xl border border-emerald-500/30 space-y-2">
+            <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>Kịch Bản Cực Thịnh (Tối Đa Tiềm Năng)</span>
+            </div>
+            <p id="res-scenario-optimal" class="text-xs md:text-sm text-slate-300 leading-relaxed font-light">
+              Bạn sáng lập hoặc điều hành một tổ chức có tầm ảnh hưởng lớn, tự do tài chính và truyền cảm hứng cho hàng trăm con người.
+            </p>
+          </div>
+
+          <!-- Scenario 2: Default -->
+          <div class="glass-panel p-5 rounded-2xl border border-blue-500/30 space-y-2">
+            <div class="flex items-center gap-2 text-blue-400 font-bold text-sm">
+              <i data-lucide="clock" class="w-4 h-4"></i>
+              <span>Kịch Bản Hiện Trạng (Nếu Giữ Nhịp Độ Cũ)</span>
+            </div>
+            <p id="res-scenario-default" class="text-xs md:text-sm text-slate-300 leading-relaxed font-light">
+              Bạn vẫn là một cá nhân tài năng nhưng bị kìm kẹp bởi các quy tắc cũ nếu không dám bước ra xây dựng đế chế riêng.
+            </p>
+          </div>
+
+          <!-- Scenario 3: Pitfall / Blindspot -->
+          <div class="glass-panel p-5 rounded-2xl border border-rose-500/30 space-y-2">
+            <div class="flex items-center gap-2 text-rose-400 font-bold text-sm">
+              <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+              <span>Cạm Bẫy Tâm Lý & Điểm Mù (Blind Spots)</span>
+            </div>
+            <p id="res-scenario-pitfall" class="text-xs md:text-sm text-slate-300 leading-relaxed font-light">
+              Cạm bẫy ôm đồm, không chịu ủy quyền dẫn đến kiệt sức và làm tổn thương các mối quan hệ thân tín.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECTION: ROADMAP (3 PHASES) - TRỌNG TÂM YÊU CẦU -->
+      <div class="space-y-6 pt-4">
+        <div class="text-center space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 text-cyan-300 text-xs font-semibold border border-cyan-700/40">
+            <i data-lucide="milestone" class="w-3.5 h-3.5"></i>
+            Lộ Trình Từng Giai Đoạn Độc Quyền
+          </div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white font-heading">
+            Bản Đồ 3 Giai Đoạn Chinh Phục Bản Thể Tương Lai
+          </h2>
+          <p class="text-xs md:text-sm text-slate-400 max-w-xl mx-auto">
+            Được thiết kế riêng dựa trên điểm số tính cách và mục tiêu của bạn. Đánh dấu các nhiệm vụ để theo dõi tiến độ thực chiến!
+          </p>
+        </div>
+
+        <!-- 3 Phase Cards Container -->
+        <div id="roadmap-phases-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- SECTION: ACTION TOOLKIT & DAILY HABITS - TRỌNG TÂM CÁCH THỨC -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
+        
+        <!-- Left: 5 Daily Keystone Habits (6 Cols) -->
+        <div class="lg:col-span-6 glass-panel p-6 md:p-8 rounded-3xl border border-white/10 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                <i data-lucide="calendar-check-2" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-base">5 Thói Quen Vi Mô Hàng Ngày</h3>
+                <p class="text-xs text-slate-400">Atomic Keystone Habits</p>
+              </div>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-purple-900/40 text-purple-300 font-mono">Everyday</span>
+          </div>
+
+          <div id="habits-list-container" class="space-y-3">
+            <!-- Dynamically populated habits -->
+          </div>
+        </div>
+
+        <!-- Right: Skill Stack & Books (6 Cols) -->
+        <div class="lg:col-span-6 space-y-6">
+          
+          <!-- Skill Stack Card -->
+          <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+              <div class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                <i data-lucide="layers-3" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Bộ Kỹ Năng Vàng Cần Rèn Luyện (Skill Stack)</h3>
+                <p class="text-xs text-slate-400">Vũ khí tạo đòn bẩy trong 5 năm tới</p>
+              </div>
+            </div>
+
+            <div id="skill-stack-container" class="space-y-2">
+              <!-- Dynamically populated skill stack -->
+            </div>
+          </div>
+
+          <!-- Recommended Books Card -->
+          <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Tủ Sách Gối Đầu Giường Khuyên Đọc</h3>
+                <p class="text-xs text-slate-400">Nuôi dưỡng tư duy của bậc thầy</p>
+              </div>
+            </div>
+
+            <div id="books-list-container" class="space-y-2">
+              <!-- Dynamically populated books -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FOOTER ACTIONS -->
+      <div class="text-center py-8 space-y-4 no-print border-t border-slate-800/80">
+        <h4 class="text-base font-bold text-white">Bạn Đã Sẵn Sàng Kiến Tạo Phiên Bản Tốt Nhất Của Mình?</h4>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button id="btn-footer-download" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-purple-600/25 transition hover:scale-105 flex items-center gap-2">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span>Tải Ảnh Thẻ Chia Sẻ Với Bạn Bè</span>
+          </button>
+          <button id="btn-footer-print" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition border border-slate-700 flex items-center gap-2">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>In Bản Đồ Lộ Trình</span>
+          </button>
+        </div>
+        <p class="text-xs text-slate-500">Dữ liệu được lưu trữ an toàn trong trình duyệt của bạn (LocalStorage).</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- APP FOOTER -->
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500 no-print">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-400">FutureYou AI</span>
+        <span>• Khám phá bản thể tương lai & Lộ trình hành động</span>
+      </div>
+      <div>
+        <span>Phát triển vì mục tiêu khai phóng tiềm năng con người</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript App (Tự động thích ứng cả chế độ mở trực tiếp file:/// và chạy qua Web Server) -->
+  <script>
+    if (window.location.protocol === 'file:') {
+      const script = document.createElement('script');
+      script.src = './js/bundle.js';
+      document.body.appendChild(script);
+    } else {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = './js/app.js';
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>
